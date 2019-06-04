@@ -7,19 +7,49 @@
     </head>
 
     <body><!--onload="get()"-->
+        <form>
+        <h3>Lab</h3>
+        <div style="background-color: #cccccc; padding: 1em; border-radius: 25px;">
 
+        <br>
         <div>
             The ID is:
             <span class="id"></span>
             The version is:
             <span class="version"></span>
         </div>
-
-        <a href="#" onclick="create()">Create</a>
-
+        <p></p>
+        <strong>Cache by Etag</strong>
+        <a href="#" onclick="createEtag()">Create</a>
+        |
+        <a href="#" onclick="updateEtag()">Update</a>
+        | 
+        <a href="#" onclick="getEtag(true)">Get</a>
+        | 
+        <strong>Cache by path</strong>
+        <a href="#" onclick="createEtag()">Create</a>
+        |
         <a href="#" onclick="update()">Update</a>
-        
-        <a href="#" onclick="get()">Get</a>
+        | 
+        <a href="#" onclick="getCacheByPath()">
+            Get by path: 
+        </a>
 
+        <select>
+            <option value="composit">1-2</option>
+            <option value="path">1/2</option>
+        </select>
+
+        </div>
+
+        <h3>Etag förklaring</h3>
+        Om man väljer Etag så slår REST andropet alltd mot backend för att validera Etag. Om vädena är identiska skickas ingen payload.<br>
+        Server:
+        <pre>res.set('etag', 'W/' + avgorande.version);</pre>
+        Client:
+        <pre>'If-None-Match': avgorande.version</pre>
+        Etagen överrider Cache-Control och Expires.
+
+        </form>
     </body>
 </html>
