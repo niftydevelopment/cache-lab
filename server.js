@@ -6,6 +6,8 @@ const fs = require('fs');
 
 var avgorande = JSON.parse(fs.readFileSync('avgorande.json', 'utf8'));
 
+app.use(express.static('public'));
+
 
 app.put('/api/etag', (req, res) => {
     avgorande.id = 1;
@@ -16,7 +18,7 @@ app.put('/api/etag', (req, res) => {
 });
 
 app.post('/api/etag', (req, res) => {
-    avgorande.id = 1;
+    avgorande.id = Math.floor(Math.random() * 100);
     avgorande.version = 1;
     console.log('---POST---', avgorande.id, avgorande.version);
     return res.send(JSON.stringify({id:avgorande.id}));
@@ -92,19 +94,19 @@ app.get('/api', (req, res) => {
 
 
 
-
-
-
 app.get('/', function(req, res) {
     console.log('----> html');
     res.set('Cache-Control', 'public, max-age=31536000, stale-while-revalidate=2592000');
-    res.sendFile('/Users/demassinner/Desktop/fubar/index.html');
+    res.sendFile('index.html');
 });
+
 
 app.get('/js/*', function(req, res) {
     console.log('----> js');
     res.set('Cache-Control', 'public, max-age=31536000, stale-while-revalidate=2592000');
-    res.sendFile('/Users/demassinner/Desktop/fubar/client.js');
+    res.sendFile('client.js');
 });
+
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
